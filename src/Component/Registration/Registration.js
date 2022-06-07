@@ -3,6 +3,7 @@ import { registerForm } from '../../api/auth';
 import Layout from '../Layout/Layout';
 import './Registration.css'
 import { useForm } from "react-hook-form";
+import { Link } from 'react-router-dom';
 
 const Registration = () => {
   const {
@@ -29,7 +30,7 @@ const Registration = () => {
         <section className='registrationForm'>
           <div className="wrapper">
             <div id="formContent">
-              <h2 className="active"> Registration</h2>
+              <h2 className="active">Create your account</h2>
               <div className="fadeIn first">
                 <img src="https://www.bootdey.com/img/Content/avatar/avatar7.png" id="icon" alt="User Icon" />
               </div>
@@ -39,6 +40,9 @@ const Registration = () => {
              {/*    <input type="submit" className="fadeIn fourth" value="Log In" /> */}
                 <input type="submit" className="fadeIn fourth" value="Registration" />
               </form>
+              <div className='loginLink'>
+              <p>Already have a account? <Link to='/login'>Login</Link></p>
+              </div>
             </div>
           </div>
         </section>

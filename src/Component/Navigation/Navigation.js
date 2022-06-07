@@ -1,33 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+
+import { isAuthenticate, itemTotal } from '../../api/auth'
 import './Navigation.css'
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
+  const navigate=useNavigate()
+  const [length,setLength]=useState('')
+  useEffect(() => {
+    setLength(itemTotal())
+  }, [])
+  const logout=()=>{
+    window.localStorage.clear();
+    return navigate('/')
+  }
+  
   return (
     <>
-      {/*
-    <section className='navigation'>
-     <Navbar expand="lg">
-     <Container>
-       <Navbar.Brand href="#">Navbar scroll</Navbar.Brand>
-       <Navbar.Toggle aria-controls="navbarScroll" />
-       <Navbar.Collapse id="navbarScroll">
-         <Nav
-           className="ml-auto my-2 my-lg-0 navLink"
-           style={{ maxHeight: '100px' }}
-           navbarScroll
-         >
-           <Link to="/">Home</Link>
-           <Link to="/cart">Cart</Link>
-           <Link to="/login">Login</Link>
-           <Link to="/registration">Signup</Link>
-         </Nav>
-       </Navbar.Collapse>
-     </Container>
-   </Navbar>
-     </section>
-    */}
 
       <header className="section-header">
 
@@ -40,15 +30,29 @@ const Navigation = () => {
               <li className="nav-item">
                 <Link to="/" className="d-flex ">Home</Link>
               </li>
-              <li className="nav-item">
-                <Link to="/cart" className="d-flex">Cart</Link>
+              {isAuthenticate() && (
+                <>
+                <li className="nav-item">
+                <Link to="/cart" className="d-flex">Cart {length && length>0 ? <span>({length})</span> :null}</Link>
               </li>
               <li className="nav-item">
-                <Link to="/login" className="d-flex">Sign in</Link>
+              <Link to="" onClick={logout} className="d-flex">Logout</Link>
+            </li>
+                </>
+              )}
+            
+              
+              {!isAuthenticate() && (
+                <>
+                <li className="nav-item">
+                <Link to="/login" className="d-flex">Login</Link>
               </li>
               <li className="nav-item">
-                <Link to="/registration" className="d-flex">Sign up</Link>
+                <Link to="/register" className="d-flex">Registration</Link>
               </li>
+                </>
+              )}
+             
             </ul>
           </div>
 

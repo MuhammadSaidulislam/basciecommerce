@@ -79,8 +79,9 @@ const [categoryFilter,setCategoryFilter]=useState()
 // add to cart
 const addToCart = (data) => {
        console.log(data);
+
     addItem(data, () => {
-  
+        return navigate('/')
     });
   };
 

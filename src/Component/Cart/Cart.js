@@ -3,7 +3,7 @@ import './Cart.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose, faCoffee, faDeleteLeft, faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import Layout from '../Layout/Layout';
-import { getCart,removeItem } from '../../api/auth';
+import { getCart, removeItem, updateItem } from '../../api/auth';
 import { Col, Container, Row } from 'react-bootstrap';
 
 const Cart = () => {
@@ -18,16 +18,34 @@ const Cart = () => {
     // console.log('cart',items);
 
     // plus minus product item
-    let [count, setCount] = useState(1);
+    // let [count, setCount] = useState(1);
 
-    function incrementCount() {
-        count = count + 1;
-        setCount(count);
+    // function incrementCount() {
+    //     count = count + 1;
+    //     setCount(count);
+    // }
+    // function decrementCount() {
+    //     count = count - 1;
+    //     setCount(count);
+    // }
+
+    // total value
+    const getTotal = () => {
+        return items.reduce((currentvalue, nextValue) => {
+            return currentvalue + nextValue.count * nextValue.price;
+        }, 0);
+    };
+
+
+    // update quantity
+     //update prodcut qnt
+     const [count, setCount] = useState(items.count);
+  const handelChnage = (productId) => (event) => {
+    setCount(event.target.value < 1 ? 1 : event.target.value);
+    if (event.target.value >= 1) {
+      updateItem(productId, event.target.value);
     }
-    function decrementCount() {
-        count = count - 1;
-        setCount(count);
-    }
+  };
 
     return (
         <>
@@ -39,7 +57,8 @@ const Cart = () => {
                         <Col md={12}>
                             <div className="shopping-cart">
                                 <div className="title">
-                                    <h1>Shopping Cart</h1>
+                                    <h1>Shopping Cart {items.length}</h1>
+
                                 </div>
                                 <table className="table productCart">
                                     <tbody>
@@ -57,11 +76,11 @@ const Cart = () => {
                                                 </td>
                                                 <td>
                                                     <div className="quantity">
-                                                        <button onClick={decrementCount} className="minus-btn" type="button" name="button">
+                                                        <button className="minus-btn" type="button" name="button">
                                                             <FontAwesomeIcon icon={faMinusCircle} />
                                                         </button>
-                                                        <input type="text" value={count} />
-                                                        <button onClick={incrementCount} className="plus-btn" type="button" name="button">
+                                                        <input type="number" value={count} onChange={handelChnage(data.id)} />
+                                                        <button className="plus-btn" type="button" name="button">
                                                             <FontAwesomeIcon icon={faPlusCircle} />
                                                         </button>
                                                     </div>
@@ -71,15 +90,19 @@ const Cart = () => {
                                                 </td>
                                                 <td>
                                                     <div className="deleteBtn">
-                                                        <button onClick={()=>removeItem(data.id)} className="delete-btn">
+                                                        <button onClick={() => removeItem(data.id)} className="delete-btn">
                                                             <FontAwesomeIcon icon={faClose} />
                                                         </button>
                                                     </div>
                                                 </td>
                                             </tr>
                                         )}
-
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colSpan={4} className='totalAmount'><p >Total Value: {getTotal()}</p></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
                         </Col>

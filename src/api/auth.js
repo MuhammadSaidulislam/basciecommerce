@@ -46,6 +46,18 @@ export const authenticate = (data, next) => {
     }
 };
 
+//is authenticte
+export const isAuthenticate = () => {
+    if (typeof window == undefined) {
+      return false;
+    }
+    if (localStorage.getItem("jwt")) {
+      return JSON.parse(localStorage.getItem("jwt"));
+    } else {
+      return false;
+    }
+  };
+
 export const productInfo = () => {
     return fetch(`${API}/products`, {
         method: "GET",
@@ -104,27 +116,35 @@ export const getCart = () => {
 };
 
 
+// product update
 //update cart
 export const updateItem = (productId, count) => {
     let cart = [];
     if (typeof window !== "undefined") {
-        if (localStorage.getItem("cart")) {
-            cart = JSON.parse(localStorage.getItem("cart"));
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+  
+      cart.map((product, i) => {
+        if (product.id === productId) {
+          cart[i].count = count;
         }
-
-        cart.map((product, i) => {
-            if (product._id === productId) {
-                cart[i].count = count;
-            }
-        });
-
-        localStorage.setItem('cart', JSON.stringify(cart));
+      });
+  
+      localStorage.setItem('cart', JSON.stringify(cart));
     }
-};
+  };
 
-
-
-
+  //cart length
+export const itemTotal = () => {
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("cart")) {
+        return JSON.parse(localStorage.getItem("cart")).length;
+      }
+    }
+  
+    return 0;
+  };
 
 // cart product emplty
 //remove item from cart
