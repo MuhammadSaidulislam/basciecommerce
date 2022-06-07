@@ -7,16 +7,13 @@ import { itemTotal } from '../../api/cart';
 const Navigation = () => {
   const navigate = useNavigate()
   const [length, setLength] = useState(0);
-  
+
+  // cart item length
   useEffect(() => {
     setLength(itemTotal)
   }, [length]);
 
-  useEffect(() => {
-    console.log(length);
-  }, [length])
-
-
+  // logout
   const logout = () => {
     window.localStorage.clear();
     return navigate('/')

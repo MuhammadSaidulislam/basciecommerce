@@ -18,7 +18,6 @@ const Login = () => {
         console.log('fail');
       } else {
         authenticate(data, () => {
-          console.log('succeess');
           return navigate('/')
         });
       }

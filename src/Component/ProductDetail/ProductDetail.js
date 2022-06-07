@@ -8,6 +8,8 @@ import './ProductDetail.css'
 const ProductDetail = () => {
     const { id } = useParams()
     const [details, setDetails] = useState([]);
+
+    // product details
     useEffect(() => {
         productDetails(id).then((data) => {
             setDetails(data);

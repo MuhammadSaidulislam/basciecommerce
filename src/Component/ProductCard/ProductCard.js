@@ -8,25 +8,26 @@ import './ProductCard.css'
 const ProductCard = () => {
 
     const navigate = useNavigate();
-      // prodcut search
-      const [searchTerm, setSearchTerm] = useState('');
+    // prodcut search
+    const [searchTerm, setSearchTerm] = useState('');
     // show all product
     const [products, setProducts] = useState([]);
     const [allProduct, setAllProduct] = useState([]);
     const [categoryOption, setCategoryOption] = useState([]);
 
-    let chars = new Set([]);
+    let categoryArray = new Set([]);
 
+
+    // load all products
     useEffect(() => {
         productInfo().then((data) => {
             setProducts(data);
             setAllProduct(data)
             for (let i = 0; i < data.length; i++) {
-                chars.add(data[i].category)
+                categoryArray.add(data[i].category)
             }
-            const array = Array.from(chars);
+            const array = Array.from(categoryArray);
             setCategoryOption([...array])
-
         })
     }, []);
 
@@ -49,27 +50,14 @@ const ProductCard = () => {
     }
 
 
-
-  
-
     // product details
     const singleProduct = (id) => {
         return navigate(`products/${id}`)
     }
-// Category filter
-   
-    // useEffect(() => {
-    //     for (let i = 0; i < products.length; i++) {
-    //         chars.add(products[i].category)
-    //     }
-    //     const array = Array.from(chars);
-    //     setCategoryOption([...array])
 
-    // }, [products]);
+    // Category filter
 
-    // const [categoryFilter, setCategoryFilter] = useState()
     const filterdata = (event) => {
-        console.log(event.target.value);
         let datavalue = allProduct.filter(data => data.category === event.target.value);
         setProducts(datavalue);
     }

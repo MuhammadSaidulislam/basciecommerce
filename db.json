@@ -14,6 +14,11 @@
       "email": "help@gmail.com",
       "password": "$2a$10$Kz0n0/5Xso9J9pn6nVTvaOLHBnv0W6Q5Mpe1HM/xNy.oRDjrKftLG",
       "id": 3
+    },
+    {
+      "email": "latest@gmail.com",
+      "password": "$2a$10$Vwz0YXVdJ.K3OxKb.etmO.3btRfvEi9kcla8mj6YgOG2Y5M3BTwyG",
+      "id": 4
     }
   ],
   "products": [

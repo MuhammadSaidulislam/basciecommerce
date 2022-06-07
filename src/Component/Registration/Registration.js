@@ -3,9 +3,10 @@ import { registerForm } from '../../api/auth';
 import Layout from '../Layout/Layout';
 import './Registration.css'
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Registration = () => {
+  const navigate=useNavigate();
   const {
     register,
     handleSubmit,
@@ -13,12 +14,10 @@ const Registration = () => {
   const onSubmit = (data) => {
     const { email, password } = data;
     registerForm({ email, password }).then((data) => {
-      console.log('data', data);
       if (data.error) {
         console.log(data.erro);
-        console.log('fail');
       } else {
-        console.log('success');
+        return navigate('/login')
       }
     })
   }

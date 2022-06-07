@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Cart.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClose, faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faClose } from '@fortawesome/free-solid-svg-icons'
 import Layout from '../Layout/Layout';
 import { getCart, removeItem, updateItem } from '../../api/cart';
 import { Col, Container, Row } from 'react-bootstrap';
@@ -12,26 +12,21 @@ import "react-credit-cards/es/styles-compiled.css";
 
 
 const Cart = () => {
+    const ref = useRef(null);
+    // products item
     const [items, setItems] = useState([]);
+    const [count, setCount] = useState(items.count);
+    // credit card
+    const [number, setNumber] = useState("");
+    const [name, setName] = useState("");
+    const [expiry, setExpiry] = useState("");
+    const [cvc, setCvc] = useState("");
+    const [focus, setFocus] = useState("");
 
     //get cart data
     useEffect(() => {
         setItems(getCart());
     }, []);
-
-    // console.log('cart',items);
-
-    // plus minus product item
-    // let [count, setCount] = useState(1);
-
-    // function incrementCount() {
-    //     count = count + 1;
-    //     setCount(count);
-    // }
-    // function decrementCount() {
-    //     count = count - 1;
-    //     setCount(count);
-    // }
 
     // total value
     const getTotal = () => {
@@ -40,39 +35,21 @@ const Cart = () => {
         }, 0);
     };
 
-
-
     //update prodcut quantity
-    const [count, setCount] = useState(items.count);
-
-    const handelChnage = (productId,eventValue) => {
-
-         setCount(eventValue < 1 ? 1 : eventValue);
-        console.log('data', eventValue);
+    const handelChnage = (productId, eventValue) => {
+        setCount(eventValue < 1 ? 1 : eventValue);
         if (eventValue >= 1) {
-            // updateItem(productId, event.target.value);
             let updatePrice = updateItem(productId, eventValue);
-            console.log(updatePrice);
             setItems(updatePrice)
         }
     };
-// console.log('count',count);
-    // credit card
-    const [number, setNumber] = useState("");
-    const [name, setName] = useState("");
-    const [expiry, setExpiry] = useState("");
-    const [cvc, setCvc] = useState("");
-    const [focus, setFocus] = useState("");
 
     useEffect(() => {
         ref.current.focus();
     }, []);
 
-    const ref = useRef(null);
-
-
+    // delete product
     const deleteProduct = async (id) => {
-        // removeItem(id);
         let newCart = await removeItem(id);
         setItems(newCart);
     }
@@ -117,11 +94,11 @@ const Cart = () => {
                                                         </td>
                                                         <td>
                                                             <div className="quantity">
-                                                                <input type="number" value={data.count} onChange={(e) => handelChnage(data.id,e.target.value)} />
+                                                                <input type="number" value={data.count} onChange={(e) => handelChnage(data.id, e.target.value)} />
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <div className="total-price">$ {data.price*data.count}</div>
+                                                            <div className="total-price">$ {data.price * data.count}</div>
                                                         </td>
                                                         <td>
                                                             <div className="deleteBtn">
@@ -175,7 +152,7 @@ const Cart = () => {
                                             name="number"
                                             placeholder="Card Number"
                                             className='form-control'
-                                            maxlength="16"
+                                            maxLength="16"
                                             value={number}
                                             onChange={(e) => setNumber(e.target.value)}
                                             onFocus={(e) => setFocus(e.target.name)}
@@ -197,7 +174,7 @@ const Cart = () => {
                                             name="expiry"
                                             placeholder="MM/YY"
                                             pattern="\d\d/\d\d"
-                                            maxlength="4"
+                                            maxLength="4"
                                             className='form-control'
                                             value={expiry}
                                             onChange={(e) => setExpiry(e.target.value)}
@@ -207,7 +184,7 @@ const Cart = () => {
                                         <input
                                             type="text"
                                             name="cvc"
-                                            maxlength="4"
+                                            maxLength="4"
                                             placeholder="CVC"
                                             className='form-control'
                                             value={cvc}
