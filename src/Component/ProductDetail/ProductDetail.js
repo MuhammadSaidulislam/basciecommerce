@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Container, Row } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { productDetail } from '../../api/auth';
+import { productDetails } from '../../api/product';
 import Layout from '../Layout/Layout';
 import './ProductDetail.css'
 
@@ -9,8 +9,7 @@ const ProductDetail = () => {
     const { id } = useParams()
     const [details, setDetails] = useState([]);
     useEffect(() => {
-        productDetail(id).then((data) => {
-            console.log(data);
+        productDetails(id).then((data) => {
             setDetails(data);
         })
 
@@ -27,7 +26,7 @@ const ProductDetail = () => {
                         <Row>
                             <Col md={6}>
                                 <div className='productImg'>
-                                    <img src={details.image} />
+                                    <img src={details.image} alt='product' />
                                 </div>
                             </Col>
                             <Col md={6} className='productDetails'>

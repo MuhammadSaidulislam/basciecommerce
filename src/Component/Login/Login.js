@@ -2,13 +2,12 @@ import React from 'react'
 import Layout from '../Layout/Layout'
 import { useForm } from "react-hook-form";
 import { authenticate, loginForm } from '../../api/auth';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const Login = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    setValue,
   } = useForm();
 
   //form on submit

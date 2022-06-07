@@ -1,0 +1,12 @@
+.thankyou{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+.thankyou h1{
+    font-size: 55px;
+    color: deepskyblue;
+    font-weight: 700;
+    font-style: oblique;
+}

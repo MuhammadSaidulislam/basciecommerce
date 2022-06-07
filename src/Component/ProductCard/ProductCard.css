@@ -22,3 +22,12 @@
   text-transform: uppercase;
   color: #fff !important;
 }
+.productBody .name{
+  font-weight: 600;
+  font-size: 18px;
+  color: #2876db;
+  padding: 0px;
+}
+.sortBtn button{
+  margin: 0px 2px;
+}

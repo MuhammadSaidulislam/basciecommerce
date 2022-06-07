@@ -1,16 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Navigate, useNavigate } from 'react-router-dom';
-import { addItem, productDetail, productInfo } from '../../api/auth';
+import { useNavigate } from 'react-router-dom';
+import { productInfo } from '../../api/product';
+import { addItem } from '../../api/cart';
 import './ProductCard.css'
 
 const ProductCard = () => {
 
     const navigate = useNavigate();
+      // prodcut search
+      const [searchTerm, setSearchTerm] = useState('');
+    // show all product
     const [products, setProducts] = useState([]);
+    const [allProduct, setAllProduct] = useState([]);
+    const [categoryOption, setCategoryOption] = useState([]);
+
+    let chars = new Set([]);
+
     useEffect(() => {
         productInfo().then((data) => {
             setProducts(data);
+            setAllProduct(data)
+            for (let i = 0; i < data.length; i++) {
+                chars.add(data[i].category)
+            }
+            const array = Array.from(chars);
+            setCategoryOption([...array])
+
         })
     }, []);
 
@@ -27,96 +43,72 @@ const ProductCard = () => {
         nameSort.sort(function (x, y) {
             let a = x.name.toUpperCase(),
                 b = y.name.toUpperCase();
-            return a == b ? 0 : a > b ? 1 : -1;
+            return a === b ? 0 : a > b ? 1 : -1;
         });
         setProducts([...nameSort]);
     }
 
 
 
-    // prodcut search
-    const [searchTerm, setSearchTerm] = useState('');
+  
 
     // product details
-
     const singleProduct = (id) => {
-        // console.log(id);
         return navigate(`products/${id}`)
     }
+// Category filter
+   
+    // useEffect(() => {
+    //     for (let i = 0; i < products.length; i++) {
+    //         chars.add(products[i].category)
+    //     }
+    //     const array = Array.from(chars);
+    //     setCategoryOption([...array])
 
-    const [categoryOption, setCategoryOption] = useState([]);
-    let chars = new Set([]);
-    useEffect(() => {
+    // }, [products]);
 
-        for (let i = 0; i < products.length; i++) {
-            chars.add(products[i].category)
-        }
-        //console.log('data set', chars);
-        const array = Array.from(chars);
-        setCategoryOption([...array])
-
-    }, [products]);
-
-    useEffect(() => {
-
-        console.log(categoryOption);
-
-    }, [categoryOption]);
-
-const [categoryFilter,setCategoryFilter]=useState()
-
-// console.log(categoryFilter);
-
-    const filterdata=(value)=>{
-        console.log(value);
-        setCategoryFilter(value);
-        let datavalue=products.filter(data => data.category === value);
+    // const [categoryFilter, setCategoryFilter] = useState()
+    const filterdata = (event) => {
+        console.log(event.target.value);
+        let datavalue = allProduct.filter(data => data.category === event.target.value);
         setProducts(datavalue);
     }
 
-// console.log(categoryFilter);
 
-// add to cart
-const addToCart = (data) => {
-       console.log(data);
-
-    addItem(data, () => {
-        return navigate('/')
-    });
-  };
+    // add to cart
+    const addToCart = (data) => {
+        addItem(data, () => {
+            return navigate('/cart')
+        });
+    };
 
     return (
         <>
             <section className="header-main border-bottom bg-white">
-                <div className="container-fluid">
+                <Container>
 
-                    <div className="row p-2 pt-3 pb-3 d-flex align-items-center">
-                        <div className="col-md-3">
-                        {categoryOption && categoryOption.length ? categoryOption.map(data=>
-                            <button className='btn btn-info' onClick={()=>filterdata(data)}>{data}</button>
-                            ):''}
-                          {/*
-                          <select className="form-select" defaultValue={'DEFAULT'} onChange={(e) =>filterdata(e)}>
+                    <Row className="p-2 pt-3 pb-3 d-flex align-items-center">
+                        <Col md={3}>
+                            <select className="form-select" defaultValue={'DEFAULT'} onChange={filterdata}>
                                 <option value="DEFAULT">Choose by category</option>
-                                {categoryOption && categoryOption.length ? categoryOption.map(data=>
-                                    <option value={data}>{data}</option>
-                                    ):''}
+                                {categoryOption && categoryOption.length ? categoryOption.map(data =>
+                                    <option>{data}</option>
+                                ) : ''}
                             </select>
-                        */}
-                        </div>
-                        <div className="col-md-6">
+                        </Col>
+                        <Col md={6}>
                             <div className="d-flex form-inputs">
                                 <input className="form-control" type="text" placeholder="Search any product..." onChange={e => setSearchTerm(e.target.value)} />
                             </div>
-                        </div>
-                        <div className="col-md-3">
-                            <div className="d-flex d-none d-md-flex flex-row align-items-center">
-                                <button className='btn btn-info ml-3' onClick={() => sortByPrice()}>Sort by price</button>
-                                <button className='btn btn-danger mr-2' onClick={() => sortByName()}>Sort by name</button>
+                        </Col>
+                        <Col md={3}>
+                            <div className="d-flex sortBtn">
+                                <button className='btn btn-info' onClick={() => sortByPrice()}>Sort by price</button>
+                                <button className='btn btn-danger' onClick={() => sortByName()}>Sort by name</button>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </Col>
+                    </Row>
+                </Container>
             </section>
 
 
@@ -124,30 +116,28 @@ const addToCart = (data) => {
             <Row className="searchProduct">
 
                 {products.filter((data) => {
-                    if (searchTerm == "") {
+                    if (searchTerm === "") {
                         return data
                     }
                     else if (data.name.toLowerCase().includes(searchTerm.toLowerCase())) {
                         return data;
                     }
-                }).map((data, key) => {
+                }).map((data) => {
                     return <>
                         <Col md={4} key={data.id}>
                             <div className="card mt-3">
-                                <a href="#">
-                                    <img src={data.image} className="card-img-top" alt="product.title" />
-                                </a>
+                                <img src={data.image} className="card-img-top" alt="product.title" />
                                 <div className="label-top shadow-sm">
                                     <p className="">{data.category}</p>
                                 </div>
-                                <div className="card-body">
+                                <div className="card-body productBody">
                                     <div className="clearfix mb-3">
                                         <span className="float-start badge rounded-pill bg-success">{data.price}</span>
                                     </div>
-                                    <button onClick={() => singleProduct(data.id)} className='btn'>{data.name}</button>
-                                    <p className="description">{data.description}</p>
+                                    <button onClick={() => singleProduct(data.id)} className='btn name'>Name: {data.name}</button>
+                                    <p className="about">{data.description}</p>
                                     <div className="d-grid gap-2 my-4">
-                                        <button  onClick={()=>addToCart(data)} className="btn btn-warning bold-btn">add to cart</button>
+                                        <button onClick={() => addToCart(data)} className="btn btn-warning bold-btn">add to cart</button>
                                     </div>
                                 </div>
                             </div>
