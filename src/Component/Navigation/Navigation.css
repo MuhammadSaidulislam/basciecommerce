@@ -1,0 +1,19 @@
+.navigation{
+    background-color: rgb(46, 134, 235);
+    z-index: 9999;
+}
+.navLink a{
+    text-decoration: none;
+    padding: 8px 12px;
+    background-color: rgb(204, 204, 204);
+    color: #000;
+    font-weight: 500;
+    margin: 0 2px;
+    color: #fff !important;
+}
+.nav-item a{
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 8px;
+    font-size: 17px;
+}

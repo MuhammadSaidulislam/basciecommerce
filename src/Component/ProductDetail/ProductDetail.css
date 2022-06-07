@@ -1,0 +1,33 @@
+.productSection {
+    height: 100vh;
+    display: flex;
+}
+.productImg img{
+    height: auto;
+    width: 100%;
+}
+.productDetails {
+    display: flex;
+    align-items: center;
+}
+.productDetails h1 span,.productDetails h2 span,.productDetails h3 span,.productDetails h1 span{
+    font-weight: 600;
+}
+.productDetails h1 {
+    color: #252525;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 25px;
+}
+.productDetails h2 {
+    color: #252525;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 25px;
+}
+.productDetails h3 {
+    color: #252525;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+}

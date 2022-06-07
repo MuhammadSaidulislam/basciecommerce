@@ -1,0 +1,153 @@
+.shopping-cart {
+    background: #eeeeee;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+}
+.shopping-cart .title h1{
+    text-align: center;
+    font-size: 36px;
+    margin: 20px 0px;
+    font-weight: 600;
+}
+.productCart{
+    align-items: center;
+}
+
+/* Buttons -  Delete and Like */
+.quantity.buttons {
+    position: relative;
+    padding-top: 30px;
+    margin-right: 60px;
+}
+
+.deleteBtn .delete-btn {
+    display: inline-block;
+    cursor: pointer;
+    border: none !important;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #fff;
+    background-color: rgb(238, 34, 160);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+
+.like-btn {
+    position: absolute;
+    top: 9px;
+    left: 15px;
+    display: inline-block;
+    background: url('');
+    width: 60px;
+    height: 60px;
+    background-size: 2900%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.is-active {
+    animation-name: animate;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-timing-function: steps(28);
+    animation-fill-mode: forwards;
+}
+
+@keyframes animate {
+    0% {
+        background-position: left;
+    }
+
+    50% {
+        background-position: right;
+    }
+
+    100% {
+        background-position: right;
+    }
+}
+
+/* Product Image */
+.image {
+    margin-right: 50px;
+}
+
+/* Product Description */
+.description {
+    padding-top: 10px;
+    margin-right: 60px;
+    width: 115px;
+}
+
+.description span {
+    display: block;
+    font-size: 14px;
+    color: #43484D;
+    font-weight: 400;
+}
+
+.description span:first-child {
+    margin-bottom: 5px;
+}
+
+.description span:last-child {
+    font-weight: 300;
+    margin-top: 8px;
+    color: #86939E;
+}
+
+
+
+.quantity input {
+    -webkit-appearance: none;
+    border: none;
+    text-align: center;
+    width: 32px;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
+}
+
+.quantity button[class*=btn] {
+    width: 30px;
+    height: 30px;
+    background-color: #E1E8EE;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.minus-btn img {
+    margin-bottom: 3px;
+}
+
+.plus-btn img {
+    margin-top: 2px;
+}
+
+
+
+/* Total Price */
+.total-price {
+    text-align: center;
+    font-size: 16px;
+    color: #43484D;
+    font-weight: 300;
+}
+
+ .productImage img {
+    width: 120px;
+    height: 100%;
+}
+
+.table > :not(caption) > * > * {
+    padding: .5rem .5rem;
+    background-color: var(--bs-table-bg);
+    border-bottom-width: none !important;
+    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+  }
